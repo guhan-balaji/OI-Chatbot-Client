@@ -1,0 +1,1 @@
+export const SELECT_APP = "SELECT_APP";
