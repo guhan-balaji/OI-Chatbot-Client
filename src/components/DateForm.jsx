@@ -1,7 +1,12 @@
 import React, { useState } from "react";
 import DatePicker from "react-date-picker";
 
+import { useDispatch } from "react-redux";
+import { dateForm } from "../redux";
+
 function DateForm() {
+  const dispatch = useDispatch();
+
   const [value1, onChange1] = useState(() => {
     let today = new Date();
     let date = new Date(today);
@@ -16,8 +21,19 @@ function DateForm() {
   });
 
   return (
-    <form className="bg-light p-1 rounded card">
-      <h4 className="text-secondary">Enter Dates:</h4>
+    <form
+      className="bg-white p-1 rounded card"
+      onSubmit={(e) => {
+        e.preventDefault();
+        dispatch(
+          dateForm({
+            startDate: value1.toLocaleDateString("en-GB"),
+            endDate: value2.toLocaleDateString("en-GB"),
+          })
+        );
+      }}
+    >
+      <h4 className="text-dark">Enter Dates:</h4>
       <div className="form-row">
         <div className="form-group col-md-6">
           <label htmlFor="startDate">Start Date</label>
@@ -48,6 +64,9 @@ function DateForm() {
           </span>
         </div>
       </div>
+      <button type="submit" className="btn btn-outline-secondary">
+        submit
+      </button>
     </form>
   );
 }

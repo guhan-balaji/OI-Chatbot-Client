@@ -9,8 +9,9 @@ import {
 import { useDispatch } from "react-redux";
 import { fetchFromDialogflow } from "../redux";
 
-import MenuCard from "./MenuCard";
 import ViewLogic from "./ViewLogic";
+import ButtonGroup from "./ButtonGroup";
+// import MenuCard from "./MenuCard";
 
 import menu from "../arrayrefs";
 
@@ -21,7 +22,8 @@ function Chatbot() {
     const defaultMenu = menu.find(({ id }) => id === "SelectApp");
     addResponseMessage("Welcome to AUDIRE.");
     renderCustomComponent(() => (
-      <MenuCard title={defaultMenu.title} options={defaultMenu.options} />
+      // <MenuCard title={defaultMenu.title} options={defaultMenu.options} />
+      <ButtonGroup title={defaultMenu.title} options={defaultMenu.options} />
     ));
   }, []);
 
