@@ -1,5 +1,6 @@
 import React, { useState } from "react";
-import DatePicker from "react-date-picker";
+import { Form, Button, Col } from "react-bootstrap";
+import DatePicker from "react-date-picker"; //modify css of datepicker to remove border.
 
 import { useDispatch } from "react-redux";
 import { dateForm } from "../redux";
@@ -21,8 +22,8 @@ function DateForm() {
   });
 
   return (
-    <form
-      className="bg-white p-1 rounded card"
+    <Form
+      className="bg-white p-1 rounded"
       onSubmit={(e) => {
         e.preventDefault();
         dispatch(
@@ -33,11 +34,11 @@ function DateForm() {
         );
       }}
     >
-      <h4 className="text-dark">Enter Dates:</h4>
-      <div className="form-row">
-        <div className="form-group col-md-6">
-          <label htmlFor="startDate">Start Date</label>
-          <span id="startDate">
+      <Form.Text as="h4">Enter Dates:</Form.Text>
+      <Form.Row>
+        <Form.Group as={Col} md="6" controlId="startDate">
+          <Form.Label>Start Date</Form.Label>
+          <span>
             <DatePicker
               onChange={onChange1}
               value={value1}
@@ -48,10 +49,10 @@ function DateForm() {
               yearPlaceholder="yyyy"
             />
           </span>
-        </div>
-        <div className="form-group col-md-6">
-          <label htmlFor="endDate">End Date</label>
-          <span id="endDate">
+        </Form.Group>
+        <Form.Group as={Col} md="6" controlId="endDate">
+          <Form.Label>End Date</Form.Label>
+          <span>
             <DatePicker
               onChange={onChange2}
               value={value2}
@@ -62,12 +63,12 @@ function DateForm() {
               yearPlaceholder="yyyy"
             />
           </span>
-        </div>
-      </div>
-      <button type="submit" className="btn btn-outline-secondary">
+        </Form.Group>
+      </Form.Row>
+      <Button variant="outline-secondary" type="submit" block>
         submit
-      </button>
-    </form>
+      </Button>
+    </Form>
   );
 }
 

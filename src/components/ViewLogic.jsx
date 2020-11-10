@@ -1,6 +1,8 @@
 import React from "react";
+import { connect } from "react-redux";
 
-import DateForm from "./DateForm";
+// import DateForm from "./DateForm";
+import SelectForm from "./SelectForm";
 import ButtonGroup from "./ButtonGroup";
 // import MenuCard from "./MenuCard";
 
@@ -9,22 +11,15 @@ import menu, { forms } from "../arrayrefs";
 function ViewLogic(props) {
   return props.intent && menu.some((el) => el.title === props.value) ? (
     <div>
-      {/* {renderCustomComponent(()=> */}
-      {/* <MenuCard
-        title={menu.find((el) => el.title === props.value).title}
-        options={menu.find((el) => el.title === props.value).options}
-      /> */}
       <ButtonGroup
         title={menu.find((el) => el.title === props.value).title}
         options={menu.find((el) => el.title === props.value).options}
       />
-      {/* )} */}
     </div>
   ) : props.value && props.intent && forms.includes(props.value) ? (
     <div>
-      {/* {renderCustomComponent(()=> */}
-      <DateForm />
-      {/* )} */}
+      {/* <DateForm /> */}
+      {props.visible && <SelectForm />}
     </div>
   ) : props.value && props.intent ? (
     <div
@@ -45,4 +40,8 @@ function ViewLogic(props) {
   );
 }
 
-export default ViewLogic;
+const mapStateToProps = (state) => {
+  return { visible: state.showSelectForm.visible };
+};
+
+export default connect(mapStateToProps)(ViewLogic);

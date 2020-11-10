@@ -1,0 +1,27 @@
+.fa-trash-table{
+    color: red;
+}
+
+.fa-trash-table:hover{
+    color: orangered;
+}
+
+.fa-csv-card{
+    color: gainsboro;
+    float: right;
+    margin-left: -50%;
+}
+
+.fa-csv-card:hover{
+    color: white;
+    float: right;
+    margin-left: -50%;
+}
+
+.fa-template-card{
+    color: darkcyan;
+}
+
+.fa-template-card:hover{
+    color: mediumturquoise;
+}

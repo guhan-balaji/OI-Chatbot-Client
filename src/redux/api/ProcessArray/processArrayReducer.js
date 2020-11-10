@@ -1,34 +1,32 @@
 import {
-  FETCH_DIALOGFLOW_REQUEST,
-  FETCH_DIALOGFLOW_SUCCESS,
-  FETCH_DIALOGFLOW_FAILURE,
-} from "./dfTypes";
+  FETCH_PROCESS_ARRAY_REQUEST,
+  FETCH_PROCESS_ARRAY_SUCCESS,
+  FETCH_PROCESS_ARRAY_FAILURE,
+} from "./processArrayTypes";
 
 const initialState = {
   loading: false,
-  response: {},
+  response: [],
   error: "",
 };
 
 const reducer = (state = initialState, action) => {
   switch (action.type) {
-    case FETCH_DIALOGFLOW_REQUEST:
+    case FETCH_PROCESS_ARRAY_REQUEST:
       return {
         ...state,
         loading: true,
       };
-    case FETCH_DIALOGFLOW_SUCCESS:
+    case FETCH_PROCESS_ARRAY_SUCCESS:
       return {
-        ...state,
         loading: false,
         response: action.payload,
         error: "",
       };
-    case FETCH_DIALOGFLOW_FAILURE:
+    case FETCH_PROCESS_ARRAY_FAILURE:
       return {
-        ...state,
         loading: false,
-        response: {},
+        response: [],
         error: action.payload,
       };
     default:

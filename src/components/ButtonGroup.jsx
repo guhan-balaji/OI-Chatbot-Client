@@ -1,6 +1,8 @@
 import React from "react";
 import { renderCustomComponent, toggleMsgLoader } from "react-chat-widget";
 
+import { Button } from "react-bootstrap";
+
 import { useDispatch } from "react-redux";
 import { fetchFromDialogflow } from "../redux";
 
@@ -13,8 +15,9 @@ function ButtonGroup(props) {
     <div>
       <h4 className="text-info">{props.title}</h4>
       {props.options.map((option) => (
-        <button
-          className="btn btn-outline-info m-1"
+        <Button
+          variant="outline-info"
+          className="m-1"
           style={{ borderRadius: "15px" }}
           key={props.title + "_" + option + Math.random()}
           value={option}
@@ -29,7 +32,7 @@ function ButtonGroup(props) {
           }}
         >
           {option}
-        </button>
+        </Button>
       ))}
     </div>
   );

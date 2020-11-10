@@ -12,6 +12,7 @@ import { fetchFromDialogflow } from "../redux";
 import ViewLogic from "./ViewLogic";
 import ButtonGroup from "./ButtonGroup";
 // import MenuCard from "./MenuCard";
+// import SelectForm from './SelectForm';
 
 import menu from "../arrayrefs";
 
@@ -22,8 +23,11 @@ function Chatbot() {
     const defaultMenu = menu.find(({ id }) => id === "SelectApp");
     addResponseMessage("Welcome to AUDIRE.");
     renderCustomComponent(() => (
-      // <MenuCard title={defaultMenu.title} options={defaultMenu.options} />
+      <div>
+      {/* <MenuCard title={defaultMenu.title} options={defaultMenu.options} /> */}
       <ButtonGroup title={defaultMenu.title} options={defaultMenu.options} />
+      {/* <SelectForm /> */}
+      </div>
     ));
   }, []);
 

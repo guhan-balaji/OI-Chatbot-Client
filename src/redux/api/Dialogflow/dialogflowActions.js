@@ -3,8 +3,16 @@ import {
   FETCH_DIALOGFLOW_REQUEST,
   FETCH_DIALOGFLOW_SUCCESS,
   FETCH_DIALOGFLOW_FAILURE,
-} from "./dfTypes";
-import { selectApp } from "../index";
+} from "./dialogflowTypes";
+
+import {
+  selectApp,
+  dataLoad,
+  fetchProcessArray,
+  showSelectForm,
+} from "../../index";
+
+import { forms } from "../../../arrayrefs";
 
 export const fetchFromDialogflow = (query) => {
   // console.log("query: " + query);
@@ -20,10 +28,15 @@ export const fetchFromDialogflow = (query) => {
       const data = await response.data;
       // console.log(data);
       dispatch(fetchDialogflowSuccess(data));
-      if(data.intent === "SelectApp"){
-      dispatch(selectApp(data.value));
-    }
-    return data;
+      if (data.intent === "SelectApp") {
+        dispatch(selectApp(data.value));
+        dispatch(fetchProcessArray(data.value));
+      } else if (data.intent === "DataLoadOptions") {
+        dispatch(dataLoad(data.value));
+      } else if (forms.includes(data.value)) {
+        dispatch(showSelectForm(true));
+      }
+      return data;
     } catch (error) {
       dispatch(fetchDialogflowFailure(error.details));
     }
