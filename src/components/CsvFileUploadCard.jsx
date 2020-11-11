@@ -3,37 +3,32 @@ import { toggleMsgLoader } from "react-chat-widget";
 
 import { Card } from "react-bootstrap";
 
-import { useDispatch } from "react-redux";
+import { useDispatch, connect } from "react-redux";
 
-import store from "../redux/store";
 import { fileData, csvUpload } from "../redux";
 
 import MapTable from "./MapTable";
 
 import "../App.css";
 
-const CsvFileUploadCard = () => {
+const CsvFileUploadCard = (props) => {
+  const { app, process, fileDataLocal } = props;
+
   const dispatch = useDispatch();
   const csvInput = useRef();
-  const [state] = useState(store.getState());
-  const [app] = useState(state.selectApp.app);
-  const [process] = useState(state.selectProcess.process);
+
   const [loading, setLoading] = useState(true);
-  const [fileDataLocal, setFileDataLocal] = useState({
-    file: null,
-    fileName: "",
-    fileSize: "0.00 B",
-  });
 
   const deleteFile = () => {
     csvInput.current.value = null;
-    setFileDataLocal({
-      file: null,
-      fileName: "",
-      fileSize: "0.00 B",
-    });
     setLoading(true);
-    dispatch(fileData(fileDataLocal));
+    dispatch(
+      fileData({
+        file: null,
+        fileName: "",
+        fileSize: "0.00 B",
+      })
+    );
   };
 
   const handleChange = (e) => {
@@ -45,15 +40,8 @@ const CsvFileUploadCard = () => {
     else if (size < 1073741824) file_size = (size / 1048576).toFixed(1) + " MB";
     else file_size = (size / 1073741824).toFixed(3) + " GB";
 
-    setFileDataLocal({
-      ...fileDataLocal,
-      file: e.target.files[0],
-      fileName: e.target.files[0].name,
-      fileSize: file_size,
-    });
     dispatch(
       fileData({
-        ...fileDataLocal,
         file: e.target.files[0],
         fileName: e.target.files[0].name,
         fileSize: file_size,
@@ -61,11 +49,10 @@ const CsvFileUploadCard = () => {
     );
     dispatch(
       csvUpload({
-        ...fileDataLocal,
         file: e.target.files[0],
         fileName: e.target.files[0].name,
         fileSize: file_size,
-        processName: state.selectProcess.process,
+        processName: process,
       })
     ).then(() => {
       toggleMsgLoader();
@@ -115,9 +102,17 @@ const CsvFileUploadCard = () => {
           )}
         </Card.Body>
       </Card>
-      {app && process && !loading && <MapTable />}
+      {app && process && fileDataLocal.fileName && !loading && <MapTable />}
     </div>
   );
 };
 
-export default CsvFileUploadCard;
+const mapStateToProps = (state) => {
+  return {
+    app: state.selectApp.app,
+    process: state.selectProcess.process,
+    fileDataLocal: state.fileData,
+  };
+};
+
+export default connect(mapStateToProps)(CsvFileUploadCard);

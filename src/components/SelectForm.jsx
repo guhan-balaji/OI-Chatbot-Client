@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 
 import { Form, Spinner, Col } from "react-bootstrap";
 
@@ -25,8 +25,8 @@ const SelectForm = (props) => {
     processArray,
     processArrayLoading,
     processDefnLoading,
+    templateAvailable,
   } = props;
-  const [templateAvailable, setTemplateAvailable] = useState(false);
 
   return (
     <Form className="mt-3">
@@ -81,6 +81,7 @@ const SelectForm = (props) => {
             name="app"
             onChange={(e) => {
               dispatch(selectApp(e.target.value));
+              dispatch(selectProcess(""));
               dispatch(fetchProcessArray(e.target.value));
             }}
           >
@@ -114,11 +115,7 @@ const SelectForm = (props) => {
             name="process"
             onChange={(e) => {
               dispatch(selectProcess(e.target.value));
-              dispatch(getTemplate(e.target.value)).then((data) =>
-                data[0]
-                  ? setTemplateAvailable(true)
-                  : setTemplateAvailable(false)
-              );
+              dispatch(getTemplate(e.target.value))
               dispatch(fetchProcessDefn(e.target.value));
             }}
           >
@@ -145,6 +142,7 @@ const mapStateToProps = (state) => {
     processArray: state.processArray.response,
     processArrayLoading: state.processArray.loading,
     processDefnLoading: state.processDefn.loading,
+    templateAvailable: state.getTemplate.response[0],
   };
 };
 

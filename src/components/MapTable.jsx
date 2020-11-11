@@ -2,11 +2,11 @@ import React, { useState } from "react";
 import axios from "axios";
 import dateFormat from "dateformat";
 
-import { Form, Table, Button } from "react-bootstrap";
+import { Form, Table, Button, Spinner } from "react-bootstrap";
 
 import { useDispatch } from "react-redux";
 
-import { showSelectForm, fileData, selectProcess } from "../redux";
+import { fileData, getTemplate, selectProcess, selectApp } from "../redux";
 import store from "../redux/store";
 
 import "../App.css";
@@ -14,6 +14,7 @@ import "../App.css";
 const MapTable = () => {
   const dispatch = useDispatch();
 
+  const [loading, setLoading] = useState(false);
   const [state] = useState(store.getState());
   const [mapTableRows, setMapTableRows] = useState(() => {
     const arr = [];
@@ -159,20 +160,28 @@ const MapTable = () => {
             },
           }).then((response) => {
             console.log(response.data);
-            dispatch(
-              fileData({
-                file: null,
-                fileName: "",
-                fileSize: "0.00 B",
-              })
-            );
-            dispatch(showSelectForm(false));
-            dispatch(selectProcess(""));
+            setLoading(true);
+            dispatch(getTemplate(""));
+            setTimeout(() => {
+              dispatch(
+                fileData({
+                  file: null,
+                  fileName: "",
+                  fileSize: "0.00 B",
+                })
+              );
+              dispatch(selectProcess(""));
+              dispatch(selectApp(""));
+              setLoading(false);
+            }, 1200);
           });
         }}
       >
         save
       </Button>
+      {loading && (
+        <Spinner animation="border" size="sm" variant="info" className="ml-2" />
+      )}
     </div>
   );
 };

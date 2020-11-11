@@ -5,14 +5,7 @@ import {
   FETCH_DIALOGFLOW_FAILURE,
 } from "./dialogflowTypes";
 
-import {
-  selectApp,
-  dataLoad,
-  fetchProcessArray,
-  showSelectForm,
-} from "../../index";
-
-import { forms } from "../../../arrayrefs";
+import { selectApp, dataLoad, fetchProcessArray } from "../../index"
 
 export const fetchFromDialogflow = (query) => {
   // console.log("query: " + query);
@@ -33,8 +26,6 @@ export const fetchFromDialogflow = (query) => {
         dispatch(fetchProcessArray(data.value));
       } else if (data.intent === "DataLoadOptions") {
         dispatch(dataLoad(data.value));
-      } else if (forms.includes(data.value)) {
-        dispatch(showSelectForm(true));
       }
       return data;
     } catch (error) {
