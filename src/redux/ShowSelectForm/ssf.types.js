@@ -1,1 +1,0 @@
-export const SHOW_SELECT_FORM = "SHOW_SELECT_FORM";
