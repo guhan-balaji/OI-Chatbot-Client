@@ -4,7 +4,6 @@ import selectProcessReducer from "./SelectProcess/spReducer";
 import fileDataReducer from "./FileData/fileDataReducer";
 import dateFormReducer from "./DateForm/formReducer";
 import dataLoadReducer from "./DataLoad/dlReducer";
-import showSelectFormReducer from "./ShowSelectForm/ssfReducer";
 import dialogflowReducer from "./api/Dialogflow/dialogflowReducer";
 import processArrayReducer from "./api/ProcessArray/processArrayReducer";
 import processDefnReducer from "./api/ProcessDefn/processDefnReducer";
@@ -18,7 +17,6 @@ const rootReducer = combineReducers({
   fileData: fileDataReducer,
   dateForm: dateFormReducer,
   dataLoad: dataLoadReducer,
-  showSelectForm: showSelectFormReducer,
   dialogflow: dialogflowReducer,
   processArray: processArrayReducer,
   processDefn: processDefnReducer,
