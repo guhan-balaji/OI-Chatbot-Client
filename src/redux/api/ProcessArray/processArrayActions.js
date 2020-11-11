@@ -22,7 +22,7 @@ export const fetchProcessArray = (query) => {
         },
         data: queryString.stringify({
           tenantId: "AB00001",
-          moduleName: query.split(" ").join("_"),
+          moduleName: query,
         }),
       });
       const data = await response.data.data;

@@ -1,5 +1,4 @@
 import React from "react";
-import { connect } from "react-redux";
 
 // import DateForm from "./DateForm";
 import SelectForm from "./SelectForm";
@@ -19,7 +18,7 @@ function ViewLogic(props) {
   ) : props.value && props.intent && forms.includes(props.value) ? (
     <div>
       {/* <DateForm /> */}
-      {props.visible && <SelectForm />}
+      {<SelectForm />}
     </div>
   ) : props.value && props.intent ? (
     <div
@@ -40,8 +39,4 @@ function ViewLogic(props) {
   );
 }
 
-const mapStateToProps = (state) => {
-  return { visible: state.showSelectForm.visible };
-};
-
-export default connect(mapStateToProps)(ViewLogic);
+export default ViewLogic;

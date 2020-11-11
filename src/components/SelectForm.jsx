@@ -2,8 +2,7 @@ import React, { useState } from "react";
 
 import { Form, Spinner, Col } from "react-bootstrap";
 
-import { useDispatch } from "react-redux";
-import store from "../redux/store";
+import { useDispatch, connect } from "react-redux";
 
 import {
   selectApp,
@@ -18,14 +17,15 @@ import menu from "../arrayrefs";
 import CsvFileUploadCard from "./CsvFileUploadCard";
 import Template from "./Template";
 
-const SelectForm = () => {
+const SelectForm = (props) => {
   const dispatch = useDispatch();
-  const [state] = useState(store.getState());
-  const [app, setApp] = useState(state.selectApp.app);
-  const [process, setProcess] = useState(state.selectProcess.process);
-  const [processArray, setProcessArray] = useState(state.processArray.response);
-  const [processArrayLoading, setProcessArrayLoading] = useState(false);
-  const [processDefnLoading, setProcssDefnLoading] = useState(true);
+  const {
+    app,
+    process,
+    processArray,
+    processArrayLoading,
+    processDefnLoading,
+  } = props;
   const [templateAvailable, setTemplateAvailable] = useState(false);
 
   return (
@@ -44,7 +44,9 @@ const SelectForm = () => {
             defaultValue={"Choose..."}
             name="company"
           >
-            <option value="Choose..." disabled>Choose...</option>
+            <option value="Choose..." disabled>
+              Choose...
+            </option>
           </Form.Control>
         </Form.Group>
         <Form.Group
@@ -60,7 +62,9 @@ const SelectForm = () => {
             defaultValue={"Choose..."}
             name="branch"
           >
-            <option value="Choose..." disabled>Choose...</option>
+            <option value="Choose..." disabled>
+              Choose...
+            </option>
           </Form.Control>
         </Form.Group>
         <Form.Group
@@ -76,15 +80,8 @@ const SelectForm = () => {
             value={app ? app : "Choose an App"}
             name="app"
             onChange={(e) => {
-              setProcssDefnLoading(true);
-              setProcessArrayLoading(true);
               dispatch(selectApp(e.target.value));
-              setApp(e.target.value);
-              dispatch(fetchProcessDefn([]));
-              dispatch(fetchProcessArray(e.target.value)).then((arr) => {
-                setProcessArrayLoading(false);
-                setProcessArray(arr);
-              });
+              dispatch(fetchProcessArray(e.target.value));
             }}
           >
             <option disabled>Choose an App</option>
@@ -116,17 +113,13 @@ const SelectForm = () => {
             value={process ? process : "Choose a Process"}
             name="process"
             onChange={(e) => {
-              setProcssDefnLoading(true);
-              setProcess(e.target.value);
               dispatch(selectProcess(e.target.value));
               dispatch(getTemplate(e.target.value)).then((data) =>
                 data[0]
                   ? setTemplateAvailable(true)
                   : setTemplateAvailable(false)
               );
-              dispatch(fetchProcessDefn(e.target.value)).then((data) =>
-                setProcssDefnLoading(false)
-              );
+              dispatch(fetchProcessDefn(e.target.value));
             }}
           >
             <option disabled>Choose a Process</option>
@@ -145,4 +138,14 @@ const SelectForm = () => {
   );
 };
 
-export default SelectForm;
+const mapStateToProps = (state) => {
+  return {
+    app: state.selectApp.app,
+    process: state.selectProcess.process,
+    processArray: state.processArray.response,
+    processArrayLoading: state.processArray.loading,
+    processDefnLoading: state.processDefn.loading,
+  };
+};
+
+export default connect(mapStateToProps)(SelectForm);

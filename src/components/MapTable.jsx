@@ -6,7 +6,7 @@ import { Form, Table, Button } from "react-bootstrap";
 
 import { useDispatch } from "react-redux";
 
-import { showSelectForm, fileData } from "../redux";
+import { showSelectForm, fileData, selectProcess } from "../redux";
 import store from "../redux/store";
 
 import "../App.css";
@@ -167,6 +167,7 @@ const MapTable = () => {
               })
             );
             dispatch(showSelectForm(false));
+            dispatch(selectProcess(""));
           });
         }}
       >
