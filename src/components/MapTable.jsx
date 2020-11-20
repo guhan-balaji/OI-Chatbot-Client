@@ -4,16 +4,11 @@ import dateFormat from "dateformat";
 
 import { Form, Table, Button, Spinner } from "react-bootstrap";
 
-import { useDispatch } from "react-redux";
-
-import { fileData, getTemplate, selectProcess, selectApp } from "../redux";
 import store from "../redux/store";
 
 import "../App.css";
 
 const MapTable = () => {
-  const dispatch = useDispatch();
-
   const [loading, setLoading] = useState(false);
   const [state] = useState(store.getState());
   const [mapTableRows, setMapTableRows] = useState(() => {
@@ -134,10 +129,10 @@ const MapTable = () => {
             );
             mappedData.push([[val.process, selectValue[el]]]);
           });
-          console.log(mappedData);
+          // console.log(mappedData);
           const token =
             "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1ZjU5YzRiMTc0ZTExMzBiYjViMjA5ZWEiLCJ1c2VybmFtZSI6IkhhcmlzaCIsInRlbmFudF9pZCI6IkFCMDAwMDEiLCJlbWFpbCI6ImhhcmlwcmFrYXNoLmJhYnVAb25laW50ZWdyYWwuY29tIiwib3JnYW5pemF0aW9uIjoiQUdTIEdyb3VwIiwiaWF0IjoxNjAzMjYwOTQ5LCJleHAiOjE2MDMzMDQxNDl9.vOklf3lT_gie_UN_RiEh35X-bQm_UtAUDkEde-qrOkg";
-          console.log(dateFormat(new Date(), "isoDateTime"));
+          setLoading(true);
           axios({
             method: "POST",
             url: "https://audiresb.oneintegral.com/backend/api/lease/mappedcsv",
@@ -159,21 +154,8 @@ const MapTable = () => {
               fileName: state.csvUpload.response.fileName,
             },
           }).then((response) => {
-            console.log(response.data);
-            setLoading(true);
-            dispatch(getTemplate(""));
-            setTimeout(() => {
-              dispatch(
-                fileData({
-                  file: null,
-                  fileName: "",
-                  fileSize: "0.00 B",
-                })
-              );
-              dispatch(selectProcess(""));
-              dispatch(selectApp(""));
-              setLoading(false);
-            }, 1200);
+            // console.log(response.data);
+            setLoading(false);
           });
         }}
       >
