@@ -7,8 +7,6 @@ import {
 import axios from "axios";
 import queryString from "query-string";
 
-const token = "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1ZjU5YzRiMTc0ZTExMzBiYjViMjA5ZWEiLCJ1c2VybmFtZSI6IkhhcmlzaCIsInRlbmFudF9pZCI6IkFCMDAwMDEiLCJlbWFpbCI6ImhhcmlwcmFrYXNoLmJhYnVAb25laW50ZWdyYWwuY29tIiwib3JnYW5pemF0aW9uIjoiQUdTIEdyb3VwIiwiaWF0IjoxNjAzMjYwOTQ5LCJleHAiOjE2MDMzMDQxNDl9.vOklf3lT_gie_UN_RiEh35X-bQm_UtAUDkEde-qrOkg"
-
 export const fetchProcessArray = (query) => {
   return async (dispatch) => {
     dispatch(fetchProcessArrayRequest());
@@ -18,7 +16,7 @@ export const fetchProcessArray = (query) => {
         url: "https://audiresb.oneintegral.com/backend/api/module/moduleProcess",
         headers: {
           "Content-Type": "application/x-www-form-urlencoded",
-          Authorization: token,
+          Authorization: process.env.REACT_APP_TOKEN,
         },
         data: queryString.stringify({
           tenantId: "AB00001",

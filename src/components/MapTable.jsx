@@ -130,15 +130,13 @@ const MapTable = () => {
             mappedData.push([[val.process, selectValue[el]]]);
           });
           // console.log(mappedData);
-          const token =
-            "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1ZjU5YzRiMTc0ZTExMzBiYjViMjA5ZWEiLCJ1c2VybmFtZSI6IkhhcmlzaCIsInRlbmFudF9pZCI6IkFCMDAwMDEiLCJlbWFpbCI6ImhhcmlwcmFrYXNoLmJhYnVAb25laW50ZWdyYWwuY29tIiwib3JnYW5pemF0aW9uIjoiQUdTIEdyb3VwIiwiaWF0IjoxNjAzMjYwOTQ5LCJleHAiOjE2MDMzMDQxNDl9.vOklf3lT_gie_UN_RiEh35X-bQm_UtAUDkEde-qrOkg";
           setLoading(true);
           axios({
             method: "POST",
             url: "https://audiresb.oneintegral.com/backend/api/lease/mappedcsv",
             headers: {
               "Content-Type": "application/json; charset-utf-8",
-              Authorization: token,
+              Authorization: process.env.REACT_APP_TOKEN,
             },
             data: {
               config: mappedData,
